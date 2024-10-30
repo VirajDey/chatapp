@@ -2,7 +2,11 @@ import React from 'react'
 import './chat.css'
 const chat = () => {
   return (
-    <div>chat</div>
+    <div className='chat'>
+      <div className="chat-container">
+        
+      </div>
+    </div>
   )
 }
 
