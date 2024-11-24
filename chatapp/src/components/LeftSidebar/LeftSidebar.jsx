@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 const LeftSidebar = () => {
 
   const navigate = useNavigate();
-  const { userData, chatData, chatUser, setChatUser, setMessagesId, messageId } = useContext(AppContext);
+  const { userData, chatData, chatUser, setChatUser, setMessagesId, messagesId } = useContext(AppContext);
   const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
 
@@ -83,6 +83,14 @@ const LeftSidebar = () => {
   const setChat = async (item) => {
     setMessagesId(item.messageId);
     setChatUser(item);
+    const userChatsRef = doc(db,'chats',userData.id);
+    const userChatsSnapshot = await getDoc(userChatsRef);
+    const userChatsData = userChatsSnapshot.data();
+    const chatIndex = userChatsData.chatsData.findIndex((c)=>c.messageId===item.messageId);
+    userChatsData.chatsData[chatIndex].messageSeen = true;
+    await updateDoc(userChatsRef,{
+      chatsData:userChatsData.chatsData
+    })
   }
 
   return (
@@ -111,7 +119,7 @@ const LeftSidebar = () => {
             <p>{user.name}</p>
           </div>
           : chatData.map((item, index) => (
-            <div onClick={() => setChat(item)} key={index} className="friends">
+            <div onClick={() => setChat(item)} key={index} className={`friends ${item.messageSeen || item.messageId === messagesId ? "" : "border"}`}>
               <img src={item.userData.avatar} alt="" />
               <div>
                 <p>{item.userData.name}</p>
