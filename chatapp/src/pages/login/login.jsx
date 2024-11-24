@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Login.css'
 import assets from '../../assets/assets'
-import { signup,login } from '../../config/firebase'
+import { signup, login, resetPass } from '../../config/firebase'
 const Login = () => {
   const [currState, setCurrState] = useState("Sign Up");
   const [userName, setUsername] = useState("");
@@ -10,10 +10,10 @@ const Login = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     if (currState == "Sign Up") {
-      signup(userName,email,password);
+      signup(userName, email, password);
     }
-    else{
-      login(email,password)
+    else {
+      login(email, password)
     }
   }
 
@@ -32,6 +32,7 @@ const Login = () => {
         </div>
         <div className="login-forget">
           {currState === "Sign Up" ? <p className="login-toggle">Alredy have an account <span onClick={() => setCurrState("Login")}>Login Here</span></p> : <p className="login-toggle">Create an Account <span onClick={() => setCurrState("Sign Up")}>Click Here</span></p>}
+          {currState === "Login" ? <p className="login-toggle">Forgot Password ? <span onClick={() => resetPass(email)}>Reset Here</span></p> : null}
         </div>
       </form >
     </div >
