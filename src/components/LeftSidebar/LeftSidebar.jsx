@@ -6,6 +6,7 @@ import { arrayUnion, collection, doc, getDoc, getDocs, query, serverTimestamp, s
 import { db } from '../../config/firebase'
 import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify';
+import { logout } from '../../config/firebase'
 const LeftSidebar = () => {
 
   const navigate = useNavigate();
