@@ -27,7 +27,7 @@ const Login = () => {
         <input onChange={(e) => setPassword(e.target.value)} value={password} type='password' placeholder='Password' className="form-input" required />
         <button type='submit'>{currState === "Sign Up" ? "Create Account" : "Login Now"}</button>
         <div className="login-term">
-          <input type="checkbox" />
+          <input required type="checkbox" />
           <p>Agree to the terms of use and Privacy Policy</p>
         </div>
         <div className="login-forget">
