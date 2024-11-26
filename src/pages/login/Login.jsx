@@ -2,20 +2,26 @@ import React, { useState } from 'react'
 import './Login.css'
 import assets from '../../assets/assets'
 import { signup, login, resetPass } from '../../config/firebase'
+import { toast } from 'react-toastify'
 const Login = () => {
   const [currState, setCurrState] = useState("Sign Up");
   const [userName, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    if (currState == "Sign Up") {
-      signup(userName, email, password);
+    try {
+    if (currState === "Sign Up") {
+      await signup(userName, email, password);
+      toast.success("Account Created Successfully");
+    } else {
+      await login(email, password);
+      toast.success("Login Successfully");
     }
-    else {
-      login(email, password)
-    }
+  } catch (error) {
+    toast.error("Something went wrong. Please try again!");
   }
+};
 
   return (
     <div className='login'>
