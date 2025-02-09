@@ -11,17 +11,20 @@ const Login = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-    if (currState === "Sign Up") {
-      await signup(userName, email, password);
-      toast.success("Account Created Successfully");
-    } else {
-      await login(email, password);
-      toast.success("Login Successfully");
+      if (currState === "Sign Up") {
+        await signup(userName, email, password);
+        toast.success("Account Created Successfully");
+      } else {
+        const user = await login(email, password);
+        if (!user) {
+          throw new Error("Check Your Credentials"); // Explicitly throw an error if login fails
+        }
+        toast.success("Login Successfully");
+      }
+    } catch (error) {
+      toast.error(error.message || "Something went wrong. Please try again!");
     }
-  } catch (error) {
-    toast.error("Something went wrong. Please try again!");
-  }
-};
+  };
 
   return (
     <div className='login'>
